@@ -108,7 +108,7 @@ function Layout({productos = [], catalogo}) {
   return (
     <div className={styles.appLayout}>
       <BarraAnuncio anuncio={anuncio.anuncio} />
-      <Header />
+      <Header cantidadCarrito={cantidadCarrito} onAbrirCarrito={() => setMostrarCarrito(true)} />
       <NavBar cantidadCarrito={cantidadCarrito} onAbrirCarrito={() => setMostrarCarrito(true)} />
 
       <Notificacion aviso={aviso} onCerrar={() => setAviso(null)} />

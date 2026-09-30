@@ -1,0 +1,172 @@
+{
+  "rubros": [
+    {
+      "id": "canas-y-reels",
+      "nombre": "Cañas y reels",
+      "detalle": "Equipo para arrancar",
+      "orden": 1,
+      "subrubros": [
+        "Cañas",
+        "Reels"
+      ]
+    },
+    {
+      "id": "senuelos",
+      "nombre": "Señuelos",
+      "detalle": "Para tentar a la presa",
+      "orden": 2,
+      "subrubros": []
+    },
+    {
+      "id": "lineas-y-anzuelos",
+      "nombre": "Líneas y anzuelos",
+      "detalle": "Lo que no puede faltar",
+      "orden": 3,
+      "subrubros": [
+        "Líneas",
+        "Anzuelos"
+      ]
+    },
+    {
+      "id": "indumentaria",
+      "nombre": "Indumentaria",
+      "detalle": "Salí cómodo y protegido",
+      "orden": 4,
+      "subrubros": []
+    }
+  ],
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Caña Robalo 2,40 m",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Acción media, ideal para costa y laguna.",
+      "caracteristicas": [
+        "2,40 m de largo",
+        "Acción media",
+        "2 tramos"
+      ],
+      "rubro": "canas-y-reels",
+      "subrubro": "Cañas",
+      "precio": 89900,
+      "precioOferta": null,
+      "stock": 6,
+      "imagen": "https://images.unsplash.com/photo-1452109436269-d410ed332571?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-lilac",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 2,
+      "nombre": "Reel Shimano FX",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Liviano, confiable y listo para darle uso.",
+      "caracteristicas": [
+        "5 rulemanes",
+        "Freno delantero",
+        "Recuperación 5.2:1"
+      ],
+      "rubro": "canas-y-reels",
+      "subrubro": "Reels",
+      "precio": 74500,
+      "precioOferta": null,
+      "stock": 4,
+      "imagen": "https://images.unsplash.com/photo-1583249598754-b7a2f59651fb?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-sand",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 3,
+      "nombre": "Señuelo Rapala X-Rap",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Movimiento realista para tentar a la presa.",
+      "caracteristicas": [
+        "Color pejerrey",
+        "Flotante",
+        "Profundidad 1,2 m"
+      ],
+      "rubro": "senuelos",
+      "subrubro": "",
+      "precio": 32800,
+      "precioOferta": null,
+      "stock": 12,
+      "imagen": "https://images.unsplash.com/photo-1750944881571-458e33204353?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-ink",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 4,
+      "nombre": "Multifilamento 0,30 mm",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Resistente y suave para lanzar más lejos.",
+      "caracteristicas": [
+        "150 metros",
+        "Resistencia 20 lb",
+        "Color verde oliva"
+      ],
+      "rubro": "lineas-y-anzuelos",
+      "subrubro": "Líneas",
+      "precio": 18900,
+      "precioOferta": null,
+      "stock": 10,
+      "imagen": "https://images.unsplash.com/photo-1649260664200-d92b3ad50a49?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-water",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 5,
+      "nombre": "Kit de anzuelos Mustad",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Varios tamaños para tener siempre a mano.",
+      "caracteristicas": [
+        "Caja de 25 unidades",
+        "Acero reforzado",
+        "Tamaños 1 al 3/0"
+      ],
+      "rubro": "lineas-y-anzuelos",
+      "subrubro": "Anzuelos",
+      "precio": 9600,
+      "precioOferta": null,
+      "stock": 15,
+      "imagen": "https://images.unsplash.com/photo-1714880003292-17685b9999b6?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-rust",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 6,
+      "nombre": "Chaleco pescador Norte",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Bolsillos amplios para llevar todo encima.",
+      "caracteristicas": [
+        "12 bolsillos",
+        "Tela impermeable",
+        "Talle único regulable"
+      ],
+      "rubro": "indumentaria",
+      "subrubro": "",
+      "precio": 56000,
+      "precioOferta": null,
+      "stock": 3,
+      "imagen": "https://images.pexels.com/photos/6478292/pexels-photo-6478292.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "clase": "product-olive",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    }
+  ]
+}

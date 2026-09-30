@@ -1,0 +1,63 @@
+:root {
+  --ink: #17151c;
+  --muted: #77727d;
+  --paper: #f6f4f0;
+  --white: #fffdfa;
+  --line: #dedbd5;
+  --violet: #11647a;
+  --lime: #f1ca4f;
+  --coral: #ed8e6d;
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+}
+a {
+  color: inherit;
+}
+button,
+a {
+  font: inherit;
+}
+main {
+  flex: 1;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 48px 96px;
+}
+
+/* Compartida por Home e ItemListContainer */
+.eyebrow {
+  color: var(--violet);
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  main {
+    padding: 0 32px 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 0 20px 64px;
+  }
+}

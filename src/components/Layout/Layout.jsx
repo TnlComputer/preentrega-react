@@ -3,7 +3,10 @@ import {Outlet} from 'react-router-dom';
 import Header from './Header';
 import NavBar from './NavBar';
 import Footer from './Footer';
+import BarraAnuncio from '../BarraAnuncio/BarraAnuncio';
 import CartModal from '../Cart/CartModal';
+import useAnuncio from '../../hooks/useAnuncio';
+import {descuentoVigente} from '../../data/modeloAnuncio';
 import Notificacion from '../Notificacion/Notificacion';
 import styles from './Layout.module.css';
 
@@ -28,6 +31,7 @@ function Layout({productos = [], catalogo}) {
   const [carrito, setCarrito] = useState(leerCarritoGuardado);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [aviso, setAviso] = useState(null);
+  const anuncio = useAnuncio();
 
   useEffect(() => {
     localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
@@ -103,13 +107,14 @@ function Layout({productos = [], catalogo}) {
 
   return (
     <div className={styles.appLayout}>
+      <BarraAnuncio anuncio={anuncio.anuncio} />
       <Header />
       <NavBar cantidadCarrito={cantidadCarrito} onAbrirCarrito={() => setMostrarCarrito(true)} />
 
       <Notificacion aviso={aviso} onCerrar={() => setAviso(null)} />
 
       <main>
-        <Outlet context={{onAgregarAlCarrito: agregarAlCarrito, catalogo}} />
+        <Outlet context={{onAgregarAlCarrito: agregarAlCarrito, catalogo, anuncio}} />
       </main>
 
       <Footer />
@@ -120,6 +125,7 @@ function Layout({productos = [], catalogo}) {
         onQuitar={quitarDelCarrito}
         onCambiarCantidad={cambiarCantidadCarrito}
         formatoPrecio={formatoPrecio}
+        descuento={descuentoVigente(anuncio.anuncio)}
       />
     </div>
   );

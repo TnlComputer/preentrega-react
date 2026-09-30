@@ -2,8 +2,10 @@ import {Button, Modal} from 'react-bootstrap';
 import {precioFinal} from '../../data/modeloCatalogo';
 import styles from './CartModal.module.css';
 
-function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, formatoPrecio}) {
+function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, formatoPrecio, descuento = 0}) {
   const subtotal = productos.reduce((total, item) => total + precioFinal(item.producto) * item.cantidad, 0);
+  // Descuento del anuncio (free day…): se aplica sobre todo el carrito
+  const montoDescuento = Math.round((subtotal * descuento) / 100);
   const envio = productos.length > 0 ? 0 : 0;
 
   return (
@@ -64,13 +66,19 @@ function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, f
                 <span>Subtotal</span>
                 <strong>{formatoPrecio.format(subtotal)}</strong>
               </div>
+              {montoDescuento > 0 && (
+                <div className={styles.cartDescuento}>
+                  <span>Descuento {descuento}%</span>
+                  <strong>−{formatoPrecio.format(montoDescuento)}</strong>
+                </div>
+              )}
               <div>
                 <span>Envío</span>
                 <strong>{envio === 0 ? 'A calcular' : formatoPrecio.format(envio)}</strong>
               </div>
               <div className={styles.cartTotal}>
                 <span>Total</span>
-                <strong>{formatoPrecio.format(subtotal + envio)}</strong>
+                <strong>{formatoPrecio.format(subtotal - montoDescuento + envio)}</strong>
               </div>
             </div>
           </>

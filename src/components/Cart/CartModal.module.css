@@ -101,6 +101,10 @@
   font-size: 13px;
   justify-content: space-between;
 }
+.cart-summary .cart-descuento {
+  color: var(--violet);
+  font-weight: 700;
+}
 .cart-summary .cart-total {
   border-top: 1px solid var(--ink);
   color: var(--ink);

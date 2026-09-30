@@ -83,6 +83,15 @@ export function guardarCatalogo(catalogo) {
   });
 }
 
+// Devuelve el anuncio tal como quedó guardado
+export function guardarAnuncio(anuncio) {
+  return pedir('/anuncio', {
+    method: 'PUT',
+    body: JSON.stringify(anuncio),
+    headers: {'Content-Type': 'application/json'}
+  });
+}
+
 export async function subirImagen(archivo) {
   const datos = await pedir('/imagenes', {
     method: 'POST',

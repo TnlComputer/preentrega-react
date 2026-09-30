@@ -5,11 +5,13 @@
 //   GET  /api/sesion     → {email} si el token es válido
 //   POST /api/logout
 //   PUT  /api/catalogo   {rubros, productos} → guarda public/data/catalogo.json
+//   PUT  /api/anuncio    {activo, texto, desde, hasta} → guarda public/data/anuncio.json
 //   POST /api/imagenes   (archivo) → {url} subida a ImgBB (la key queda acá, no en el navegador)
 import {randomBytes, timingSafeEqual} from 'node:crypto';
 import {rename, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {validarProducto, validarRubro} from '../src/data/modeloCatalogo.js';
+import {prepararAnuncio, validarAnuncio} from '../src/data/modeloAnuncio.js';
 
 const TAMANIO_MAXIMO_JSON = 1024 * 1024; // 1 MB
 const TAMANIO_MAXIMO_IMAGEN = 5 * 1024 * 1024; // 5 MB
@@ -118,6 +120,14 @@ export default function catalogoApi({email, contrasenia, claveImgbb}) {
     configureServer(servidor) {
       const publico = servidor.config.publicDir;
       const rutaCatalogo = path.join(publico, 'data', 'catalogo.json');
+      const rutaAnuncio = path.join(publico, 'data', 'anuncio.json');
+
+      // Se escribe en un temporal y se renombra, para no dejar el JSON a medias
+      const escribirJson = async (ruta, datos) => {
+        const temporal = `${ruta}.tmp`;
+        await writeFile(temporal, `${JSON.stringify(datos, null, 2)}\n`);
+        await rename(temporal, ruta);
+      };
 
       const sesionDe = peticion => {
         const token = (peticion.headers.authorization || '').replace(/^Bearer /, '');
@@ -162,11 +172,20 @@ export default function catalogoApi({email, contrasenia, claveImgbb}) {
             const error = validarCatalogo(catalogo);
             if (error) return responder(respuesta, 400, {error});
 
-            // Se escribe en un temporal y se renombra, para no dejar el JSON a medias
-            const temporal = `${rutaCatalogo}.tmp`;
-            await writeFile(temporal, `${JSON.stringify({rubros: catalogo.rubros, productos: catalogo.productos}, null, 2)}\n`);
-            await rename(temporal, rutaCatalogo);
+            await escribirJson(rutaCatalogo, {rubros: catalogo.rubros, productos: catalogo.productos});
             return responder(respuesta, 200, {ok: true});
+          }
+
+          if (peticion.method === 'PUT' && ruta === '/anuncio') {
+            const datos = await leerJson(peticion);
+            if (!datos || typeof datos.texto !== 'string') return responder(respuesta, 400, {error: 'Falta el texto del anuncio.'});
+
+            const anuncio = prepararAnuncio(datos);
+            const errores = validarAnuncio(anuncio);
+            if (Object.keys(errores).length) return responder(respuesta, 400, {error: Object.values(errores)[0]});
+
+            await escribirJson(rutaAnuncio, anuncio);
+            return responder(respuesta, 200, anuncio);
           }
 
           if (peticion.method === 'POST' && ruta === '/imagenes') {

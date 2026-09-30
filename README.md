@@ -25,7 +25,8 @@ Una tienda online de artículos de pesca, hecha con React. Tiene un catálogo de
 - Gestión de rubros y subrubros.
 - Edición del anuncio: texto, fechas, descuento y vista previa.
 
-> El panel funciona solo corriendo el proyecto en local (`npm run dev`), porque guarda los cambios en los archivos JSON del proyecto. El sitio publicado en GitHub Pages es estático: muestra la tienda y el anuncio, pero no permite editar.
+> **En el sitio publicado el panel está en modo demostración:** se entra con cualquier email y contraseña para recorrer los formularios, pero los cambios no se guardan.
+> Corriendo el proyecto en local (`npm run dev`), el login valida el usuario de `.env.local` y los cambios se guardan en los archivos JSON del proyecto.
 
 ## Tecnologías
 

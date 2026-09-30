@@ -2,6 +2,17 @@
 // Esa API existe solo con `npm run dev`; en el sitio publicado no hay.
 const CLAVE_TOKEN = 'admin-token';
 
+// MODO DEMOSTRACIÓN (por ahora, en el sitio publicado):
+// - el login acepta cualquier email y contraseña, sin validarlos, para que se pueda ver el panel;
+// - guardar productos, rubros, anuncio o subir imágenes no hace nada (avisa que es una demo).
+// En local (`npm run dev`) sigue todo como siempre: login con .env.local y cambios que se guardan.
+// Para volver a usar el login real también en el sitio publicado (con un backend), poner false.
+export const MODO_DEMO = import.meta.env.PROD;
+const PREFIJO_DEMO = 'demo:';
+const avisoDemo = () =>
+  Promise.reject(new Error('Modo demostración: los cambios no se guardan. El panel se puede recorrer, pero no modifica el catálogo.'));
+
+
 export function leerToken() {
   try {
     return sessionStorage.getItem(CLAVE_TOKEN);
@@ -48,6 +59,12 @@ async function pedir(ruta, {method = 'GET', body, headers = {}} = {}) {
 }
 
 export async function iniciarSesion(email, contrasenia) {
+  if (MODO_DEMO) {
+    // Sin validar: cualquier email y contraseña entran al panel
+    guardarToken(`${PREFIJO_DEMO}${email}`);
+    return email;
+  }
+
   const datos = await pedir('/login', {
     method: 'POST',
     body: JSON.stringify({email, contrasenia}),
@@ -58,7 +75,9 @@ export async function iniciarSesion(email, contrasenia) {
 }
 
 export async function consultarSesion() {
-  if (!leerToken()) return null;
+  const token = leerToken();
+  if (!token) return null;
+  if (MODO_DEMO) return token.startsWith(PREFIJO_DEMO) ? token.slice(PREFIJO_DEMO.length) : null;
 
   try {
     return (await pedir('/sesion')).email;
@@ -68,6 +87,11 @@ export async function consultarSesion() {
 }
 
 export async function cerrarSesion() {
+  if (MODO_DEMO) {
+    guardarToken(null);
+    return;
+  }
+
   try {
     await pedir('/logout', {method: 'POST'});
   } finally {
@@ -76,6 +100,8 @@ export async function cerrarSesion() {
 }
 
 export function guardarCatalogo(catalogo) {
+  if (MODO_DEMO) return avisoDemo();
+
   return pedir('/catalogo', {
     method: 'PUT',
     body: JSON.stringify(catalogo),
@@ -85,6 +111,8 @@ export function guardarCatalogo(catalogo) {
 
 // Devuelve el anuncio tal como quedó guardado
 export function guardarAnuncio(anuncio) {
+  if (MODO_DEMO) return avisoDemo();
+
   return pedir('/anuncio', {
     method: 'PUT',
     body: JSON.stringify(anuncio),
@@ -93,6 +121,8 @@ export function guardarAnuncio(anuncio) {
 }
 
 export async function subirImagen(archivo) {
+  if (MODO_DEMO) return avisoDemo();
+
   const datos = await pedir('/imagenes', {
     method: 'POST',
     body: archivo,

@@ -2,8 +2,9 @@ import {useEffect, useState} from 'react';
 import * as adminApi from '../services/adminApi';
 import AuthContext from './AuthContext';
 
-// La contraseña se valida en server/catalogoApi.js (con ADMIN_EMAIL y
+// En local, la contraseña se valida en server/catalogoApi.js (con ADMIN_EMAIL y
 // ADMIN_PASSWORD de .env.local), nunca en el navegador.
+// En el sitio publicado, por ahora, no se valida: ver MODO_DEMO en services/adminApi.js.
 function AuthProvider({children}) {
   const [usuario, setUsuario] = useState(null);
   const [cargando, setCargando] = useState(() => Boolean(adminApi.leerToken()));

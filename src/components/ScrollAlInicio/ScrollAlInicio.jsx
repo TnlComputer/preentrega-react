@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 
-// React Router no vuelve arriba al cambiar de página: sin esto, al tocar
-// "Administración" en el pie la página nueva se abre scrolleada abajo.
+// React Router no vuelve arriba al cambiar de página: sin esto, al navegar
+// desde abajo la página nueva se abre scrolleada abajo.
 function ScrollAlInicio() {
   const {pathname, hash} = useLocation();
 

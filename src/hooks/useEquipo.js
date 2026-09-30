@@ -8,7 +8,7 @@ function useEquipo() {
   useEffect(() => {
     let cancelado = false;
 
-    fetch('/data/equipo.json')
+    fetch(`${import.meta.env.BASE_URL}data/equipo.json`)
       .then(respuesta => {
         if (!respuesta.ok) {
           throw new Error('No se pudo obtener el equipo');

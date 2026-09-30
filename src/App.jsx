@@ -17,7 +17,7 @@ function App() {
   const {productos, cargando, error} = catalogo;
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollAlInicio />
       <AuthProvider>
         <Routes>

@@ -25,15 +25,15 @@ function NavBar({cantidadCarrito, onAbrirCarrito}) {
       <Navbar className={styles.siteNav} expand="md" variant="dark">
         <Container className={styles.navContainer}>
           {pegado && (
-            <a className={`${styles.navBrand} ${styles.fadeIn}`} href="/">
+            <a className={`${styles.navBrand} ${styles.fadeIn}`} href={import.meta.env.BASE_URL}>
               El<span>.</span>Anzuelo
             </a>
           )}
           <Navbar.Toggle aria-controls="main-navigation" />
           <Navbar.Collapse id="main-navigation">
             <Nav className="mx-auto">
-              <Nav.Link href="/">Inicio</Nav.Link>
-              <Nav.Link href="/#destacados">Catálogo</Nav.Link>
+              <Nav.Link href={import.meta.env.BASE_URL}>Inicio</Nav.Link>
+              <Nav.Link href={`${import.meta.env.BASE_URL}#destacados`}>Catálogo</Nav.Link>
               <Nav.Link href="#nosotros">La casa</Nav.Link>
               <Nav.Link href="#contacto">Contacto</Nav.Link>
             </Nav>

@@ -10,7 +10,7 @@ function useCatalogo() {
     let cancelado = false;
 
     // no-store: después de editar en el panel queremos el archivo nuevo
-    fetch('/data/catalogo.json', {cache: 'no-store'})
+    fetch(`${import.meta.env.BASE_URL}data/catalogo.json`, {cache: 'no-store'})
       .then(respuesta => {
         if (!respuesta.ok) {
           throw new Error('No se pudo obtener el catálogo');

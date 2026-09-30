@@ -4,11 +4,13 @@ import { defineConfig, loadEnv } from 'vite'
 import catalogoApi from './server/catalogoApi.js'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
   // El prefijo '' lee también las variables sin VITE_ (solo quedan en el servidor)
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
+    // GitHub Pages sirve el sitio en /preentrega-react/ (en dev sigue en /)
+    base: command === 'build' ? '/preentrega-react/' : '/',
     plugins: [
       react(),
       babel({ presets: [reactCompilerPreset()] }),

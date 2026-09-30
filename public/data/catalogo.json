@@ -167,6 +167,226 @@
       "destacado": false,
       "activo": true,
       "orden": 0
+    },
+    {
+      "id": 7,
+      "nombre": "Caña Pejerrey 3,00 m",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Liviana y sensible, pensada para pejerrey de costa.",
+      "caracteristicas": [
+        "3,00 m de largo",
+        "Acción suave",
+        "3 tramos"
+      ],
+      "rubro": "canas-y-reels",
+      "subrubro": "Cañas",
+      "precio": 64900,
+      "precioOferta": null,
+      "stock": 8,
+      "imagen": "https://images.unsplash.com/photo-1541742425281-c1d3fc8aff96?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-water",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 8,
+      "nombre": "Caña Embarcado 1,80 m",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Corta y potente para pescar desde la lancha.",
+      "caracteristicas": [
+        "1,80 m de largo",
+        "Acción pesada",
+        "Enterizo"
+      ],
+      "rubro": "canas-y-reels",
+      "subrubro": "Cañas",
+      "precio": 72300,
+      "precioOferta": 65000,
+      "stock": 5,
+      "imagen": "https://images.unsplash.com/photo-1551131618-3f0a5cf594b4?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-sand",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 9,
+      "nombre": "Reel Frontal Daiwa 3000",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Frontal suave y robusto para todo tipo de pesca.",
+      "caracteristicas": [
+        "6 rulemanes",
+        "Carretel de aluminio",
+        "Recuperación 5.3:1"
+      ],
+      "rubro": "canas-y-reels",
+      "subrubro": "Reels",
+      "precio": 98500,
+      "precioOferta": null,
+      "stock": 4,
+      "imagen": "https://images.unsplash.com/photo-1689576408373-bcb41174a964?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-lilac",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 10,
+      "nombre": "Reel Rotativo Abu Garcia",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Rotativo de perfil bajo para lances precisos.",
+      "caracteristicas": [
+        "Freno magnético",
+        "7 rulemanes",
+        "Mano derecha"
+      ],
+      "rubro": "canas-y-reels",
+      "subrubro": "Reels",
+      "precio": 134900,
+      "precioOferta": null,
+      "stock": 2,
+      "imagen": "https://images.unsplash.com/photo-1687768295145-a89916e5e223?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-ink",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 11,
+      "nombre": "Cucharita Mepps N° 3",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Clásica giratoria que no falla con truchas y tarariras.",
+      "caracteristicas": [
+        "Paleta plateada",
+        "8 gramos",
+        "Anzuelo triple"
+      ],
+      "rubro": "senuelos",
+      "subrubro": "",
+      "precio": 7800,
+      "precioOferta": null,
+      "stock": 20,
+      "imagen": "https://images.unsplash.com/photo-1570353825353-5daea21cdc4d?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-olive",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 12,
+      "nombre": "Señuelo de goma Paddle Tail",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Cola vibrante que imita a una presa herida.",
+      "caracteristicas": [
+        "Pack x 5",
+        "10 cm",
+        "Color natural"
+      ],
+      "rubro": "senuelos",
+      "subrubro": "",
+      "precio": 11200,
+      "precioOferta": 9500,
+      "stock": 14,
+      "imagen": "https://images.unsplash.com/photo-1762110749192-8d936cf59911?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-rust",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 13,
+      "nombre": "Monofilamento 0,35 mm",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Nylon transparente, resistente a la abrasión.",
+      "caracteristicas": [
+        "300 metros",
+        "Resistencia 25 lb",
+        "Transparente"
+      ],
+      "rubro": "lineas-y-anzuelos",
+      "subrubro": "Líneas",
+      "precio": 12400,
+      "precioOferta": null,
+      "stock": 18,
+      "imagen": "https://images.unsplash.com/photo-1598089881449-684399a0a6e4?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-sand",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 14,
+      "nombre": "Anzuelos con rotor Owner",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Rotores armados para montar la línea en segundos.",
+      "caracteristicas": [
+        "Sobre de 10",
+        "Acero carbono",
+        "Tamaño 1/0"
+      ],
+      "rubro": "lineas-y-anzuelos",
+      "subrubro": "Anzuelos",
+      "precio": 8300,
+      "precioOferta": null,
+      "stock": 25,
+      "imagen": "https://images.unsplash.com/photo-1682024742447-56216f8f711a?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-water",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 15,
+      "nombre": "Gorra con protección UV",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Visera amplia y tela fresca para días de sol.",
+      "caracteristicas": [
+        "Protección UV 50+",
+        "Secado rápido",
+        "Talle regulable"
+      ],
+      "rubro": "indumentaria",
+      "subrubro": "",
+      "precio": 19900,
+      "precioOferta": null,
+      "stock": 9,
+      "imagen": "https://images.unsplash.com/photo-1618200471414-0b01c7ad31f1?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-ink",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
+    },
+    {
+      "id": 16,
+      "nombre": "Campera rompeviento Delta",
+      "marca": "",
+      "sku": "",
+      "descripcion": "Liviana e impermeable para salidas con viento.",
+      "caracteristicas": [
+        "Capucha desmontable",
+        "Tela impermeable",
+        "Talles S al XXL"
+      ],
+      "rubro": "indumentaria",
+      "subrubro": "",
+      "precio": 87600,
+      "precioOferta": 79900,
+      "stock": 6,
+      "imagen": "https://images.unsplash.com/photo-1611954268683-6a7fab18afdf?auto=format&fit=crop&w=900&q=85",
+      "clase": "product-olive",
+      "destacado": false,
+      "activo": true,
+      "orden": 0
     }
   ]
 }

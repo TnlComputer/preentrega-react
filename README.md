@@ -1,19 +1,64 @@
-# React + Vite
+# El.Anzuelo · Casa de pesca
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Proyecto académico** hecho para el curso **React JS de Talento Tech (comisión C26243)**, como preentrega.
+> "El Anzuelo" es una tienda **ficticia**: los productos, precios, el equipo y los datos de contacto son de ejemplo.
 
-Currently, two official plugins are available:
+**Sitio publicado:** https://tnlcomputer.github.io/preentrega-react/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Captura de la página de inicio de El.Anzuelo](docs/captura.png)
 
-## React Compiler
+## De qué se trata
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Una tienda online de artículos de pesca, hecha con React. Tiene un catálogo de productos, buscador, carrito de compras y un panel de administración para cargar productos y avisos.
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+## Funcionalidades
 
-## Expanding the ESLint configuration
+**Tienda**
+- Catálogo de productos agrupado por rubros (cañas y reels, señuelos, líneas y anzuelos, indumentaria), con precios de oferta y aviso de últimas unidades.
+- Buscador de productos y tarjetas que se dan vuelta para ver las características.
+- Favoritos y carrito de compras: se puede sumar o restar cantidades respetando el stock, y el carrito se guarda en el navegador.
+- Franja de anuncio arriba de todo (por ejemplo, un "free day"), con fechas de inicio y fin y un descuento opcional que se aplica al total del carrito.
+- Diseño adaptable: celular, tablet y escritorio hasta 1920 px; en pantallas más grandes aparece un fondo decorativo de pesca a los costados.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Panel de administración** (`/admin`, con login)
+- Alta, edición, baja y ocultamiento de productos, con subida de imágenes a ImgBB.
+- Gestión de rubros y subrubros.
+- Edición del anuncio: texto, fechas, descuento y vista previa.
+
+> El panel funciona solo corriendo el proyecto en local (`npm run dev`), porque guarda los cambios en los archivos JSON del proyecto. El sitio publicado en GitHub Pages es estático: muestra la tienda y el anuncio, pero no permite editar.
+
+## Tecnologías
+
+- [React 19](https://react.dev/) con [Vite](https://vite.dev/) y React Compiler
+- [React Router](https://reactrouter.com/) para la navegación
+- [React Bootstrap](https://react-bootstrap.github.io/) y CSS Modules para los estilos
+- Datos en JSON (`public/data/`): catálogo, equipo y anuncio
+- Publicación automática en GitHub Pages con GitHub Actions
+
+## Cómo correrlo en local
+
+Se necesita [Node.js](https://nodejs.org/) 20.19 o superior (o 22.12+).
+
+```bash
+npm install
+npm run dev
+```
+
+Se abre en http://localhost:5173/
+
+Para usar el panel de administración, copiá `.env.example` como `.env.local` y completá el usuario, la contraseña y la clave de ImgBB. `.env.local` no se sube al repositorio.
+
+| Comando | Qué hace |
+| --- | --- |
+| `npm run dev` | Servidor de desarrollo, con el panel de administración |
+| `npm run build` | Genera la versión para publicar en `dist/` |
+| `npm run preview` | Muestra la versión generada |
+| `npm run lint` | Revisa el código con ESLint |
+
+## Publicación
+
+Cada `git push` a la rama `main` compila el sitio y lo publica en GitHub Pages ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)).
+
+## Autor
+
+**Jorge Martinez** · Curso React JS · Talento Tech · Comisión C26243

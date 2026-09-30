@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Card, Container} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import useEquipo from '../../hooks/useEquipo';
 import styles from './Footer.module.css';
 
@@ -85,7 +86,9 @@ function Footer() {
         </section>
 
         <div className={styles.copyright}>
-          <span>© 2026 El Anzuelo</span>
+          <span>
+            © 2026 El Anzuelo · <Link to="/admin">Administración</Link>
+          </span>
           <span>Prepará la caja y salí a pescar.</span>
         </div>
       </Container>

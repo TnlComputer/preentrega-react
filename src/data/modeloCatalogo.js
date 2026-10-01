@@ -1,6 +1,6 @@
 // Modelo de datos del catálogo, compartido por la tienda, el panel admin
 // y la API de desarrollo (server/catalogoApi.js).
-// Todo vive en public/data/catalogo.json: {rubros: [...], productos: [...]}
+// Todo vive en public/data/productos.json: {rubros: [...], productos: [...]}
 //
 // Rubro (id = slug del nombre):
 //   {id, nombre, detalle, orden, subrubros: ['Cañas', 'Reels']}
@@ -184,6 +184,21 @@ export function ordenarProductos(productos, rubros) {
       a.subrubro.localeCompare(b.subrubro, 'es') ||
       a.nombre.localeCompare(b.nombre, 'es')
   );
+}
+
+// Lo que llega de productos.json, listo para mostrar: rubros ordenados y
+// productos en el orden de la tienda, con el nombre de su rubro
+export function prepararCatalogo({rubros = [], productos = []}) {
+  const rubrosOrdenados = [...rubros].sort((a, b) => a.orden - b.orden);
+  const nombreRubro = new Map(rubrosOrdenados.map(rubro => [rubro.id, rubro.nombre]));
+
+  return {
+    rubros: rubrosOrdenados,
+    productos: ordenarProductos(productos, rubrosOrdenados).map(producto => ({
+      ...producto,
+      rubroNombre: nombreRubro.get(producto.rubro) ?? ''
+    }))
+  };
 }
 
 // Lo que se cobra: la oferta si hay, si no el precio normal

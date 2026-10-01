@@ -33,7 +33,7 @@ Una tienda online de artículos de pesca, hecha con React. Tiene un catálogo de
 - [React 19](https://react.dev/) con [Vite](https://vite.dev/) y React Compiler
 - [React Router](https://reactrouter.com/) para la navegación
 - [React Bootstrap](https://react-bootstrap.github.io/) y CSS Modules para los estilos
-- Datos en JSON (`public/data/`): catálogo, equipo y anuncio
+- Datos en JSON (`public/data/`): productos (con sus rubros), equipo y anuncio
 - Publicación automática en GitHub Pages con GitHub Actions
 
 ## Cómo correrlo en local

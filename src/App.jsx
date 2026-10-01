@@ -15,7 +15,7 @@ import "./styles.css";
 
 function App() {
   const catalogo = useCatalogo();
-  const {productos, cargando, error} = catalogo;
+  const {productos} = catalogo;
 
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
@@ -23,7 +23,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route element={<Layout productos={productos} catalogo={catalogo} />}>
-            <Route path="/" element={<Home productos={productos} cargando={cargando} error={error} />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route
               path="/admin"

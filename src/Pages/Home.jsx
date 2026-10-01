@@ -3,7 +3,7 @@ import heroImage from '../assets/hero.jpg';
 import ItemListContainer from '../components/ItemListContainer/ItemListContainer';
 import styles from './Home.module.css';
 
-function Home({productos, cargando, error}) {
+function Home() {
   const {onAgregarAlCarrito} = useOutletContext();
 
   return (
@@ -29,12 +29,7 @@ function Home({productos, cargando, error}) {
         <span>Asesoramiento de pescador</span>
       </div>
 
-      <ItemListContainer
-        productos={productos}
-        cargando={cargando}
-        error={error}
-        onAgregarAlCarrito={onAgregarAlCarrito}
-      />
+      <ItemListContainer onAgregarAlCarrito={onAgregarAlCarrito} />
     </section>
   );
 }

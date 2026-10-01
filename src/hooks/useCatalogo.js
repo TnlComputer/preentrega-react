@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
-import {ordenarProductos} from '../data/modeloCatalogo';
+import {prepararCatalogo} from '../data/modeloCatalogo';
+import {actualizarProductos, cargarProductos} from '../services/productosApi';
 
+// Catálogo para el carrito y el panel admin (la tienda lo carga en ItemListContainer)
 function useCatalogo() {
   const [catalogo, setCatalogo] = useState({rubros: [], productos: []});
   const [cargando, setCargando] = useState(true);
@@ -9,17 +11,9 @@ function useCatalogo() {
   useEffect(() => {
     let cancelado = false;
 
-    // no-store: después de editar en el panel queremos el archivo nuevo
-    fetch(`${import.meta.env.BASE_URL}data/catalogo.json`, {cache: 'no-store'})
-      .then(respuesta => {
-        if (!respuesta.ok) {
-          throw new Error('No se pudo obtener el catálogo');
-        }
-
-        return respuesta.json();
-      })
+    cargarProductos()
       .then(datos => {
-        if (!cancelado) setCatalogo({rubros: datos.rubros, productos: datos.productos});
+        if (!cancelado) setCatalogo(datos);
       })
       .catch(errorCapturado => {
         if (!cancelado) setError(errorCapturado.message);
@@ -33,23 +27,21 @@ function useCatalogo() {
     };
   }, []);
 
-  const rubros = [...catalogo.rubros].sort((a, b) => a.orden - b.orden);
-  const nombreRubro = new Map(rubros.map(rubro => [rubro.id, rubro.nombre]));
-  const todos = ordenarProductos(catalogo.productos, rubros).map(producto => ({
-    ...producto,
-    rubroNombre: nombreRubro.get(producto.rubro) ?? ''
-  }));
+  const {rubros, productos: todos} = prepararCatalogo(catalogo);
 
   return {
     rubros,
     // Para el panel: todos, incluso los ocultos
     todosLosProductos: todos,
-    // Para la tienda: solo los activos
+    // Para el carrito: solo los activos
     productos: todos.filter(producto => producto.activo),
     cargando,
     error,
     // Lo usa el panel después de guardar en el JSON
-    reemplazarCatalogo: setCatalogo
+    reemplazarCatalogo: datos => {
+      actualizarProductos(datos);
+      setCatalogo(datos);
+    }
   };
 }
 

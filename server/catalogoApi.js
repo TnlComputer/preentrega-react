@@ -4,7 +4,7 @@
 //   POST /api/login      {email, contrasenia} → {token, email}
 //   GET  /api/sesion     → {email} si el token es válido
 //   POST /api/logout
-//   PUT  /api/catalogo   {rubros, productos} → guarda public/data/catalogo.json
+//   PUT  /api/catalogo   {rubros, productos} → guarda public/data/productos.json
 //   PUT  /api/anuncio    {activo, texto, desde, hasta} → guarda public/data/anuncio.json
 //   POST /api/imagenes   (archivo) → {url} subida a ImgBB (la key queda acá, no en el navegador)
 import {randomBytes, timingSafeEqual} from 'node:crypto';
@@ -119,7 +119,7 @@ export default function catalogoApi({email, contrasenia, claveImgbb}) {
 
     configureServer(servidor) {
       const publico = servidor.config.publicDir;
-      const rutaCatalogo = path.join(publico, 'data', 'catalogo.json');
+      const rutaCatalogo = path.join(publico, 'data', 'productos.json');
       const rutaAnuncio = path.join(publico, 'data', 'anuncio.json');
 
       // Se escribe en un temporal y se renombra, para no dejar el JSON a medias

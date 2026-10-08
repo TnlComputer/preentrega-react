@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {prepararCatalogo} from '../../data/modeloCatalogo';
 import {cargarProductos} from '../../services/productosApi';
 import ItemList from '../ItemList/ItemList';
@@ -23,7 +24,7 @@ function leerFavoritosGuardados() {
   }
 }
 
-function ItemListContainer({onAgregarAlCarrito}) {
+function ItemListContainer({onAgregarAlCarrito, soloDestacados = false}) {
   const [catalogo, setCatalogo] = useState({rubros: [], productos: []});
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -31,7 +32,7 @@ function ItemListContainer({onAgregarAlCarrito}) {
   const [favoritos, setFavoritos] = useState(leerFavoritosGuardados);
   const [rubroElegido, setRubroElegido] = useState('todos');
   const [pagina, setPagina] = useState(1);
-  const catalogoRef = useRef(null);
+  const listaRef = useRef(null);
 
   useEffect(() => {
     let cancelado = false;
@@ -75,12 +76,8 @@ function ItemListContainer({onAgregarAlCarrito}) {
   const rubros = todosLosRubros.filter(rubro => productos.some(producto => producto.rubro === rubro.id));
 
   const termino = busqueda.trim().toLowerCase();
-  const vistaInicial = !termino && rubroElegido === 'todos';
-
-  // Sin filtros, los destacados van arriba y no se repiten en el catálogo
   const productosFiltrados = productos.filter(
     producto =>
-      !(vistaInicial && producto.destacado) &&
       (rubroElegido === 'todos' || producto.rubro === rubroElegido) &&
       [producto.nombre, producto.descripcion, producto.subrubro, producto.rubroNombre, producto.marca]
         .join(' ')
@@ -107,7 +104,7 @@ function ItemListContainer({onAgregarAlCarrito}) {
 
   const irAPagina = numero => {
     setPagina(numero);
-    catalogoRef.current?.scrollIntoView({behavior: 'smooth', block: 'start'});
+    listaRef.current?.scrollIntoView({behavior: 'smooth', block: 'start'});
   };
 
   const propsLista = {
@@ -117,96 +114,130 @@ function ItemListContainer({onAgregarAlCarrito}) {
     formatoPrecio
   };
 
+  const buscador = (
+    <label className={styles.searchBox} htmlFor="buscador-productos">
+      <span aria-hidden="true">🔍</span>
+      <input
+        id="buscador-productos"
+        type="search"
+        placeholder="Buscá cañas, señuelos, anzuelos, indumentaria…"
+        value={busqueda}
+        onChange={evento => buscar(evento.target.value)}
+      />
+      {termino && (
+        <button type="button" aria-label="Limpiar búsqueda" onClick={() => buscar('')}>
+          ✕
+        </button>
+      )}
+    </label>
+  );
+
+  const resultados = (
+    <>
+      {productosFiltrados.length === 0 ? (
+        <p>No encontramos productos{termino && ` para "${busqueda}"`}.</p>
+      ) : (
+        <ItemList productos={productosDeLaPagina} {...propsLista} />
+      )}
+
+      {totalPaginas > 1 && (
+        <nav className={styles.paginacion} aria-label="Páginas del catálogo">
+          <button type="button" disabled={paginaActual === 1} onClick={() => irAPagina(paginaActual - 1)}>
+            ‹ Anterior
+          </button>
+          {Array.from({length: totalPaginas}, (_, i) => i + 1).map(numero => (
+            <button
+              key={numero}
+              type="button"
+              className={numero === paginaActual ? styles.activo : ''}
+              aria-current={numero === paginaActual ? 'page' : undefined}
+              onClick={() => irAPagina(numero)}>
+              {numero}
+            </button>
+          ))}
+          <button type="button" disabled={paginaActual === totalPaginas} onClick={() => irAPagina(paginaActual + 1)}>
+            Siguiente ›
+          </button>
+        </nav>
+      )}
+    </>
+  );
+
+  const estadoCarga = (
+    <>
+      {cargando && <p>Cargando productos…</p>}
+      {error && <p role="alert">No pudimos cargar el catálogo: {error}</p>}
+    </>
+  );
+
+  // Inicio: destacados y buscador
+  if (soloDestacados) {
+    return (
+      <section className={styles.searchSection} id="destacados">
+        <div className={styles.sectionHeading}>
+          <div>
+            <span className="eyebrow">Armá tu equipo</span>
+            <h3>{termino ? `Resultados para "${busqueda}"` : 'Para tu próxima salida'}</h3>
+          </div>
+          {!cargando && !error && (
+            <span className={styles.availability}>
+              {termino
+                ? `${conCeros(productosFiltrados.length)} productos encontrados`
+                : `${conCeros(destacados.length)} productos destacados`}
+            </span>
+          )}
+        </div>
+
+        {buscador}
+        {estadoCarga}
+
+        {!cargando && !error && (
+          <div className={styles.bloque} ref={listaRef}>
+            {termino ? resultados : <ItemList productos={destacados} {...propsLista} />}
+          </div>
+        )}
+
+        <div className={styles.verTodos}>
+          <Link to="/productos">Ver catálogo completo →</Link>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className={styles.searchSection} id="destacados">
+    <section className={styles.searchSection} id="catalogo">
       <div className={styles.sectionHeading}>
         <div>
-          <span className="eyebrow">Armá tu equipo</span>
-          <h3>{termino ? `Resultados para "${busqueda}"` : 'Para tu próxima salida'}</h3>
+          <span className="eyebrow">Catálogo</span>
+          <h3>{termino ? `Resultados para "${busqueda}"` : 'Todos los productos'}</h3>
         </div>
         {!cargando && !error && (
           <span className={styles.availability}>
-            {termino
-              ? `${conCeros(productosFiltrados.length)} productos encontrados`
-              : `${conCeros(productos.length)} productos · ${conCeros(destacados.length)} destacados`}
+            {conCeros(productosFiltrados.length)} productos{(termino || rubroElegido !== 'todos') && ' encontrados'}
           </span>
         )}
       </div>
 
-      <label className={styles.searchBox} htmlFor="buscador-productos">
-        <span aria-hidden="true">🔍</span>
-        <input
-          id="buscador-productos"
-          type="search"
-          placeholder="Buscá cañas, señuelos, anzuelos, indumentaria…"
-          value={busqueda}
-          onChange={evento => buscar(evento.target.value)}
-        />
-        {termino && (
-          <button type="button" aria-label="Limpiar búsqueda" onClick={() => buscar('')}>
-            ✕
-          </button>
-        )}
-      </label>
-
-      {cargando && <p>Cargando productos…</p>}
-      {error && <p role="alert">No pudimos cargar el catálogo: {error}</p>}
+      {buscador}
+      {estadoCarga}
 
       {!cargando && !error && (
-        <>
-          {vistaInicial && destacados.length > 0 && (
-            <div className={styles.bloque}>
-              <h4 className={styles.subtitulo}>★ Destacados</h4>
-              <ItemList productos={destacados} {...propsLista} />
-            </div>
-          )}
-
-          <div className={styles.bloque} ref={catalogoRef}>
-            <h4 className={styles.subtitulo}>Catálogo</h4>
-            <div className={styles.filtros} role="group" aria-label="Filtrar por rubro">
-              {[{id: 'todos', nombre: 'Todos'}, ...rubros].map(rubro => (
-                <button
-                  key={rubro.id}
-                  type="button"
-                  className={rubro.id === rubroElegido ? styles.activo : ''}
-                  aria-pressed={rubro.id === rubroElegido}
-                  onClick={() => elegirRubro(rubro.id)}>
-                  {rubro.nombre}
-                </button>
-              ))}
-            </div>
-
-            {productosFiltrados.length === 0 ? (
-              <p>No encontramos productos{termino && ` para "${busqueda}"`}.</p>
-            ) : (
-              <ItemList productos={productosDeLaPagina} {...propsLista} />
-            )}
-
-            {totalPaginas > 1 && (
-              <nav className={styles.paginacion} aria-label="Páginas del catálogo">
-                <button type="button" disabled={paginaActual === 1} onClick={() => irAPagina(paginaActual - 1)}>
-                  ‹ Anterior
-                </button>
-                {Array.from({length: totalPaginas}, (_, i) => i + 1).map(numero => (
-                  <button
-                    key={numero}
-                    type="button"
-                    className={numero === paginaActual ? styles.activo : ''}
-                    aria-current={numero === paginaActual ? 'page' : undefined}
-                    onClick={() => irAPagina(numero)}>
-                    {numero}
-                  </button>
-                ))}
-                <button
-                  type="button"
-                  disabled={paginaActual === totalPaginas}
-                  onClick={() => irAPagina(paginaActual + 1)}>
-                  Siguiente ›
-                </button>
-              </nav>
-            )}
+        <div className={styles.bloque} ref={listaRef}>
+          <div className={styles.filtros} role="group" aria-label="Filtrar por rubro">
+            {[{id: 'todos', nombre: 'Todos'}, ...rubros].map(rubro => (
+              <button
+                key={rubro.id}
+                type="button"
+                className={rubro.id === rubroElegido ? styles.activo : ''}
+                aria-pressed={rubro.id === rubroElegido}
+                onClick={() => elegirRubro(rubro.id)}>
+                {rubro.nombre}
+              </button>
+            ))}
           </div>
-        </>
+
+          {resultados}
+        </div>
       )}
     </section>
   );

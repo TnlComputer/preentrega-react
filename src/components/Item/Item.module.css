@@ -4,7 +4,7 @@
   font-weight: 400;
   margin: 0 0 6px;
 }
-.product-info span {
+.product-categoria {
   color: var(--muted);
   font-size: 12px;
   margin: 0;
@@ -15,10 +15,6 @@
   perspective: 1000px;
   position: relative;
 }
-.product-visual:focus-visible {
-  outline: 2px solid var(--violet);
-  outline-offset: 3px;
-}
 .product-visual-inner {
   height: 100%;
   position: relative;
@@ -26,8 +22,7 @@
   transition: transform 600ms ease;
   width: 100%;
 }
-.product-visual:hover .product-visual-inner,
-.product-visual:focus-visible .product-visual-inner {
+.product-visual.is-flipped .product-visual-inner {
   transform: rotateY(180deg);
 }
 .product-face {
@@ -142,11 +137,31 @@
   width: 190px;
   z-index: 1;
 }
-.flip-hint {
+.product-visual .flip-hint {
+  background: none;
+  border: 0;
+  border-radius: 0;
   bottom: 17px;
+  cursor: pointer;
+  font-size: 10px;
+  height: auto;
   left: 18px;
+  line-height: normal;
   opacity: 0.72;
+  padding: 4px 0;
   position: absolute;
+  transition: opacity 150ms ease;
+  width: auto;
+  z-index: 2;
+}
+.flip-hint:hover,
+.flip-hint:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+.flip-hint:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 3px;
 }
 .product-lilac {
   background: #c9bbeb;
@@ -168,27 +183,47 @@
   background: #b3bd8a;
 }
 .product-card {
+  background: rgba(255, 253, 250, 0.75);
+  backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding-bottom: 14px;
 }
 .product-info {
-  align-items: end;
   display: flex;
   flex: 1;
-  justify-content: space-between;
-  padding: 15px 2px;
+  flex-direction: column;
+  padding: 15px 14px 12px;
+  text-align: left;
 }
 .product-info h4 {
   font-size: 21px;
   margin: 4px 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.product-info p {
+/* Siempre 2 líneas */
+.product-descripcion {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   color: var(--muted);
+  display: -webkit-box;
   font-size: 12px;
   line-height: 1.4;
   margin: 8px 0 0;
-  max-width: 190px;
+  min-height: calc(2 * 1.4em);
+  overflow: hidden;
+}
+.product-precio-fila {
+  align-items: flex-end;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: auto;
+  min-height: 46px;
+  padding-top: 10px;
 }
 .product-info strong {
   font-size: 14px;
@@ -210,16 +245,18 @@
 .stock-hint {
   color: var(--coral);
   font-size: 12px;
-  margin: 8px 0 0;
+  margin: 0;
 }
 .stock-hint.stock-agotado {
-  color: var(--muted);
+  color: #c62828;
+  font-weight: 700;
 }
 .product-actions {
   align-items: center;
   border-top: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
+  margin: 0 14px;
   padding: 12px 0 0;
 }
 .quantity-control {

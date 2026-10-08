@@ -1,4 +1,5 @@
-import {Button, Modal} from 'react-bootstrap';
+import {useState} from 'react';
+import {Alert, Button, Modal} from 'react-bootstrap';
 import {precioFinal} from '../../data/modeloCatalogo';
 import styles from './CartModal.module.css';
 
@@ -7,9 +8,15 @@ function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, f
   // Descuento del anuncio sobre el total
   const montoDescuento = Math.round((subtotal * descuento) / 100);
   const envio = productos.length > 0 ? 0 : 0;
+  const [avisoPago, setAvisoPago] = useState(false);
+
+  const cerrar = () => {
+    setAvisoPago(false);
+    onCerrar();
+  };
 
   return (
-    <Modal show={mostrar} onHide={onCerrar} centered className={styles.cartModal}>
+    <Modal show={mostrar} onHide={cerrar} centered className={styles.cartModal}>
       <Modal.Header closeButton>
         <Modal.Title>Tu equipo</Modal.Title>
       </Modal.Header>
@@ -81,14 +88,20 @@ function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, f
                 <strong>{formatoPrecio.format(subtotal - montoDescuento + envio)}</strong>
               </div>
             </div>
+            {avisoPago && (
+              <Alert variant="info" className={styles.avisoPago} onClose={() => setAvisoPago(false)} dismissible>
+                <strong>Demo parcial.</strong> El pago todavía no está habilitado en esta preentrega; va a estar completo en
+                la entrega final.
+              </Alert>
+            )}
           </>
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-secondary" onClick={onCerrar}>
+        <Button variant="outline-secondary" onClick={cerrar}>
           Seguir comprando
         </Button>
-        <Button variant="dark" disabled={productos.length === 0}>
+        <Button variant="dark" disabled={productos.length === 0} onClick={() => setAvisoPago(true)}>
           Continuar al pago
         </Button>
       </Modal.Footer>

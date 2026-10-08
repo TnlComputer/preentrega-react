@@ -112,6 +112,18 @@
   background: var(--white);
   color: #d45f51;
 }
+.destacado {
+  background: var(--coral);
+  border-radius: 999px;
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  position: relative;
+  text-transform: uppercase;
+  z-index: 2;
+}
 .back-favorite {
   position: absolute;
   right: 18px;

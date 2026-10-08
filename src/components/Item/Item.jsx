@@ -26,6 +26,7 @@ function Item({producto, esFavorito, onAlternarFavorito, onAgregarAlCarrito, for
               onClick={alternarFavorito}>
               {esFavorito ? '♥' : '♡'}
             </button>
+            {producto.destacado && <span className={styles.destacado}>★ Destacado</span>}
             <img
               src={producto.imagen}
               alt={`Imagen de ${producto.nombre}`}

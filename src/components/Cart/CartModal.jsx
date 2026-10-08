@@ -1,22 +1,36 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Alert, Button, Modal} from 'react-bootstrap';
 import {precioFinal} from '../../data/modeloCatalogo';
 import styles from './CartModal.module.css';
 
-function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, formatoPrecio, descuento = 0}) {
+function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, onVaciar, formatoPrecio, descuento = 0}) {
   const subtotal = productos.reduce((total, item) => total + precioFinal(item.producto) * item.cantidad, 0);
   // Descuento del anuncio sobre el total
   const montoDescuento = Math.round((subtotal * descuento) / 100);
   const envio = productos.length > 0 ? 0 : 0;
   const [avisoPago, setAvisoPago] = useState(false);
 
-  const cerrar = () => {
-    setAvisoPago(false);
-    onCerrar();
+  const cerrarRef = useRef(onCerrar);
+  useEffect(() => {
+    cerrarRef.current = onCerrar;
+  });
+
+  // Demo: muestra el aviso unos segundos, cierra y vacía el carrito
+  useEffect(() => {
+    if (!avisoPago) return;
+    const timer = setTimeout(() => cerrarRef.current(), 5000);
+    return () => clearTimeout(timer);
+  }, [avisoPago]);
+
+  const alCerrarse = () => {
+    if (avisoPago) {
+      setAvisoPago(false);
+      onVaciar();
+    }
   };
 
   return (
-    <Modal show={mostrar} onHide={cerrar} centered className={styles.cartModal}>
+    <Modal show={mostrar} onHide={onCerrar} onExited={alCerrarse} centered className={styles.cartModal}>
       <Modal.Header closeButton>
         <Modal.Title>Tu equipo</Modal.Title>
       </Modal.Header>
@@ -89,19 +103,19 @@ function CartModal({mostrar, productos, onCerrar, onQuitar, onCambiarCantidad, f
               </div>
             </div>
             {avisoPago && (
-              <Alert variant="info" className={styles.avisoPago} onClose={() => setAvisoPago(false)} dismissible>
+              <Alert variant="info" className={styles.avisoPago}>
                 <strong>Demo parcial.</strong> El pago todavía no está habilitado en esta preentrega; va a estar completo en
-                la entrega final.
+                la entrega final. El carrito se vacía y se cierra en unos segundos.
               </Alert>
             )}
           </>
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-secondary" onClick={cerrar}>
+        <Button variant="outline-secondary" onClick={onCerrar}>
           Seguir comprando
         </Button>
-        <Button variant="dark" disabled={productos.length === 0} onClick={() => setAvisoPago(true)}>
+        <Button variant="dark" disabled={productos.length === 0 || avisoPago} onClick={() => setAvisoPago(true)}>
           Continuar al pago
         </Button>
       </Modal.Footer>
